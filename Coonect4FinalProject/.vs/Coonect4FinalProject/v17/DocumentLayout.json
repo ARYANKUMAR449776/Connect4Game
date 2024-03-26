@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\aryan\\OneDrive\\Documents\\2. Semester 2\\SODV1202\\Final project\\Connect4\\Coonect4FinalProject\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C5002C3F-DC28-4918-857B-F6AFC679FA37}|Coonect4FinalProject\\Coonect4FinalProject.csproj|c:\\users\\aryan\\onedrive\\documents\\2. semester 2\\sodv1202\\final project\\connect4\\coonect4finalproject\\coonect4finalproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C5002C3F-DC28-4918-857B-F6AFC679FA37}|Coonect4FinalProject\\Coonect4FinalProject.csproj|solutionrelative:coonect4finalproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\aryan\\OneDrive\\Documents\\2. Semester 2\\SODV1202\\Final project\\Connect4\\Coonect4FinalProject\\Coonect4FinalProject\\Program.cs",
+              "RelativeDocumentMoniker": "Coonect4FinalProject\\Program.cs",
+              "ToolTip": "C:\\Users\\aryan\\OneDrive\\Documents\\2. Semester 2\\SODV1202\\Final project\\Connect4\\Coonect4FinalProject\\Coonect4FinalProject\\Program.cs",
+              "RelativeToolTip": "Coonect4FinalProject\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-26T17:09:35.77Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
