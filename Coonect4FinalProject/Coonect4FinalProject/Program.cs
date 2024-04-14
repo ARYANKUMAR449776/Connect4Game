@@ -1,7 +1,11 @@
 
 using System.ComponentModel.Design;
 using System.Security.Claims;
-
+/*
+Final Project
+Aryan Kumar
+449776
+*/
 
 class GameBoard/*New class to implement the gameboard and check for wins and checking turns: AK*/
 {
@@ -58,16 +62,68 @@ class GameBoard/*New class to implement the gameboard and check for wins and che
     public bool CheckWin()
     {
         // Check horizontally
-        /*to be done*/
+        /*DOne AK*/
+        for (int row = 0; row < Rows; row++)
+        {
+            for (int col = 0; col <= Cols - 4; col++)
+            {
+                if (board[row, col] != ' ' &&
+                    board[row, col] == board[row, col + 1] &&
+                    board[row, col] == board[row, col + 2] &&
+                    board[row, col] == board[row, col + 3])
+                {
+                    return true;
+                }
+            }
+        }
 
         // Check vertically
-        /*to be done*/
+        /*Done AK*/
+        for (int col = 0; col < Cols; col++)
+        {
+            for (int row = 0; row <= Rows - 4; row++)
+            {
+                if (board[row, col] != ' ' &&
+                    board[row, col] == board[row + 1, col] &&
+                    board[row, col] == board[row + 2, col] &&
+                    board[row, col] == board[row + 3, col])
+                {
+                    return true;
+                }
+            }
+        }
 
         // Check diagonally (bottom-left to top-right)
-        /*to be done*/
+        /*Done Ak*/
+        for (int row = 0; row <= Rows - 4; row++)
+        {
+            for (int col = 0; col <= Cols - 4; col++)
+            {
+                if (board[row, col] != ' ' &&
+                    board[row, col] == board[row + 1, col + 1] &&
+                    board[row, col] == board[row + 2, col + 2] &&
+                    board[row, col] == board[row + 3, col + 3])
+                {
+                    return true;
+                }
+            }
+        }
 
         // Check diagonally (top-left to bottom-right)
-        /*to be done*/
+        /*Done AK*/
+        for (int row = 3; row < Rows; row++)
+        {
+            for (int col = 0; col <= Cols - 4; col++)
+            {
+                if (board[row, col] != ' ' &&
+                    board[row, col] == board[row - 1, col + 1] &&
+                    board[row, col] == board[row - 2, col + 2] &&
+                    board[row, col] == board[row - 3, col + 3])
+                {
+                    return true;
+                }
+            }
+        }
 
         return false;
     }
