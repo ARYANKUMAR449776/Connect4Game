@@ -1,11 +1,43 @@
 
 using System.ComponentModel.Design;
 using System.Security.Claims;
-/*
-Final Project
-Aryan Kumar
-449776
-*/
+/*Abstract concept for choosing name*/
+abstract class Player
+{
+    public char Symbol { get; }
+    public abstract string Name { get; }
+
+    protected Player(char symbol)
+    {
+        Symbol = symbol;
+    }
+}
+
+class Player1 : Player
+{
+    private string playerName;
+
+    public Player1(char symbol, string name) : base(symbol)
+    {
+        playerName = string.IsNullOrWhiteSpace(name) ? "Player 1 (X)" : name;
+    }
+
+    public override string Name => playerName;
+}
+
+class Player2 : Player
+{
+    private string playerName;
+
+    public Player2(char symbol, string name) : base(symbol)
+    {
+        playerName = string.IsNullOrWhiteSpace(name) ? "Player 2 (O)" : name;
+    }
+
+    public override string Name => playerName;
+}
+/*Abstract method end*/
+
 
 class GameBoard/*New class to implement the gameboard and check for wins and checking turns: AK*/
 {
@@ -62,7 +94,7 @@ class GameBoard/*New class to implement the gameboard and check for wins and che
     public bool CheckWin()
     {
         // Check horizontally
-        /*DOne AK*/
+        /*to be done*/
         for (int row = 0; row < Rows; row++)
         {
             for (int col = 0; col <= Cols - 4; col++)
@@ -78,7 +110,7 @@ class GameBoard/*New class to implement the gameboard and check for wins and che
         }
 
         // Check vertically
-        /*Done AK*/
+        /*to be done*/
         for (int col = 0; col < Cols; col++)
         {
             for (int row = 0; row <= Rows - 4; row++)
@@ -94,7 +126,7 @@ class GameBoard/*New class to implement the gameboard and check for wins and che
         }
 
         // Check diagonally (bottom-left to top-right)
-        /*Done Ak*/
+        /*to be done*/
         for (int row = 0; row <= Rows - 4; row++)
         {
             for (int col = 0; col <= Cols - 4; col++)
@@ -110,7 +142,7 @@ class GameBoard/*New class to implement the gameboard and check for wins and che
         }
 
         // Check diagonally (top-left to bottom-right)
-        /*Done AK*/
+        /*to be done*/
         for (int row = 3; row < Rows; row++)
         {
             for (int col = 0; col <= Cols - 4; col++)
@@ -157,22 +189,22 @@ class Model
 {
 
 }
-/*    Class Designed for player 1    */
-class Player1
-{
-
-}
-/*    Class Designed for player 2    */
-class Player2
-{
-
-}
 
 
 class program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("");
+        string player1Name;
+        string player2Name;
+
+        // Prompt the user to enter Player 1's name
+        Console.WriteLine("Enter Player 1's name (or leave blank for default):");
+        player1Name = Console.ReadLine();
+
+        // Prompt the user to enter Player 2's name
+        Console.WriteLine("Enter Player 2's name (or leave blank for default):");
+        player2Name = Console.ReadLine();
+       
     }
 }
