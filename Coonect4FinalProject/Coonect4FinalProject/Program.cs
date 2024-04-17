@@ -180,10 +180,62 @@ class GameBoard/*New class to implement the gameboard and check for wins and che
         return CheckWin() || CheckDraw();
     }
 }
-class Controller
+class ConnectFour
 {
+    private GameBoard board;
+private Player player1;
+private Player player2;
+private Player currentPlayer;
 
+public ConnectFour(string player1Name = null, string player2Name = null)
+{
+    board = new GameBoard();
+    player1 = new Player1('X', player1Name);
+    player2 = new Player2('O', player2Name);
+    currentPlayer = player1;
 }
+
+public void PlayGame()
+{
+    while (!board.IsGameOver())
+    {
+        board.PrintBoard();
+        int column;
+
+        do
+        {
+            Console.WriteLine($"{currentPlayer.Name}, enter column (1-7):");
+        } while (!int.TryParse(Console.ReadLine(), out column) || column < 1 || column > 7);
+
+        column--; // Adjust for 0-based indexing
+
+        if (board.DropPiece(column, currentPlayer.Symbol))
+        {
+            if (board.CheckWin())
+            {
+                board.PrintBoard();
+                Console.WriteLine($"{currentPlayer.Name} wins!");
+                return;
+            }
+            else if (board.CheckDraw())
+            {
+                board.PrintBoard();
+                Console.WriteLine("It's a draw!");
+                return;
+            }
+            else
+            {
+                currentPlayer = (currentPlayer == player1) ? player2 : player1;
+            }
+        }
+        else
+        {
+            Console.WriteLine("Column is full.");
+        }
+    }
+}
+}
+
 /*    Class designed for keeping track of the turns    */
 class Model
 {
@@ -205,6 +257,12 @@ class program
         // Prompt the user to enter Player 2's name
         Console.WriteLine("Enter Player 2's name (or leave blank for default):");
         player2Name = Console.ReadLine();
-       
+
+
+        //Create the ConnectFour game with the provided or default names
+        //ConnectFour game = new ConnectFour(player1Name, player2Name);
+
+        // Start the game
+       // game.PlayGame();
     }
 }
