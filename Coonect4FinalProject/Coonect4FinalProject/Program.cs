@@ -1,19 +1,17 @@
+using System;
 
-using System.ComponentModel.Design;
-using System.Security.Claims;
-/*Abstract concept for choosing name*/
-abstract class Player
+abstract class AbstractPlayer
 {
     public char Symbol { get; }
     public abstract string Name { get; }
 
-    protected Player(char symbol)
+    protected AbstractPlayer(char symbol)
     {
         Symbol = symbol;
     }
 }
 
-class Player1 : Player
+class Player1 : AbstractPlayer
 {
     private string playerName;
 
@@ -25,7 +23,7 @@ class Player1 : Player
     public override string Name => playerName;
 }
 
-class Player2 : Player
+class Player2 : AbstractPlayer
 {
     private string playerName;
 
@@ -36,22 +34,18 @@ class Player2 : Player
 
     public override string Name => playerName;
 }
-/*Abstract method end*/
 
-
-class GameBoard/*New class to implement the gameboard and check for wins and checking turns: AK*/
+class GameBoard
 {
-
     private char[,] board;
     private const int Rows = 6;
     private const int Cols = 7;
-
 
     public GameBoard()
     {
         board = new char[Rows, Cols];
         InitializeBoard();
-    }/*gameboard constructor*/
+    }
 
     private void InitializeBoard()
     {
@@ -62,7 +56,7 @@ class GameBoard/*New class to implement the gameboard and check for wins and che
                 board[row, col] = ' ';
             }
         }
-    }/*initializing game board*/
+    }
 
     public void PrintBoard()
     {
@@ -76,7 +70,7 @@ class GameBoard/*New class to implement the gameboard and check for wins and che
         }
         Console.WriteLine("---------------");
         Console.WriteLine("1 2 3 4 5 6 7");
-    }/*boilerplate display in cmd line*/
+    }
 
     public bool DropPiece(int column, char symbol)
     {
@@ -94,7 +88,6 @@ class GameBoard/*New class to implement the gameboard and check for wins and che
     public bool CheckWin()
     {
         // Check horizontally
-        /*to be done*/
         for (int row = 0; row < Rows; row++)
         {
             for (int col = 0; col <= Cols - 4; col++)
@@ -110,7 +103,6 @@ class GameBoard/*New class to implement the gameboard and check for wins and che
         }
 
         // Check vertically
-        /*to be done*/
         for (int col = 0; col < Cols; col++)
         {
             for (int row = 0; row <= Rows - 4; row++)
@@ -126,7 +118,6 @@ class GameBoard/*New class to implement the gameboard and check for wins and che
         }
 
         // Check diagonally (bottom-left to top-right)
-        /*to be done*/
         for (int row = 0; row <= Rows - 4; row++)
         {
             for (int col = 0; col <= Cols - 4; col++)
@@ -142,7 +133,6 @@ class GameBoard/*New class to implement the gameboard and check for wins and che
         }
 
         // Check diagonally (top-left to bottom-right)
-        /*to be done*/
         for (int row = 3; row < Rows; row++)
         {
             for (int col = 0; col <= Cols - 4; col++)
@@ -166,84 +156,77 @@ class GameBoard/*New class to implement the gameboard and check for wins and che
         {
             if (board[0, col] == ' ')
             {
-                // if there's an empty cell at the top row, the game is not a draw
+                // If there's an empty cell at the top row, the game is not a draw
                 return false;
             }
         }
-        // if all cells in the top row are filled, the game is a draw
+        // If all cells in the top row are filled, the game is a draw
         return true;
     }
-
 
     public bool IsGameOver()
     {
         return CheckWin() || CheckDraw();
     }
 }
-class ConnectFour
+
+class ConnectFourGame
 {
     private GameBoard board;
-private Player player1;
-private Player player2;
-private Player currentPlayer;
+    private AbstractPlayer player1;
+    private AbstractPlayer player2;
+    private AbstractPlayer currentPlayer;
 
-public ConnectFour(string player1Name = null, string player2Name = null)
-{
-    board = new GameBoard();
-    player1 = new Player1('X', player1Name);
-    player2 = new Player2('O', player2Name);
-    currentPlayer = player1;
-}
-
-public void PlayGame()
-{
-    while (!board.IsGameOver())
+    public ConnectFourGame(string player1Name = null, string player2Name = null)
     {
-        board.PrintBoard();
-        int column;
+        board = new GameBoard();
+        player1 = new Player1('X', player1Name);
+        player2 = new Player2('O', player2Name);
+        currentPlayer = player1;
+    }
 
-        do
+    public void PlayGame()
+    {
+        while (!board.IsGameOver())
         {
-            Console.WriteLine($"{currentPlayer.Name}, enter column (1-7):");
-        } while (!int.TryParse(Console.ReadLine(), out column) || column < 1 || column > 7);
+            board.PrintBoard();
+            int column;
 
-        column--; // Adjust for 0-based indexing
+            do
+            {
+                Console.WriteLine($"{currentPlayer.Name}, enter column (1-7):");
+            } while (!int.TryParse(Console.ReadLine(), out column) || column < 1 || column > 7);
 
-        if (board.DropPiece(column, currentPlayer.Symbol))
-        {
-            if (board.CheckWin())
+            column--; // Adjust for 0-based indexing
+
+            if (board.DropPiece(column, currentPlayer.Symbol))
             {
-                board.PrintBoard();
-                Console.WriteLine($"{currentPlayer.Name} wins!");
-                return;
-            }
-            else if (board.CheckDraw())
-            {
-                board.PrintBoard();
-                Console.WriteLine("It's a draw!");
-                return;
+                if (board.CheckWin())
+                {
+                    board.PrintBoard();
+                    Console.WriteLine($"{currentPlayer.Name} wins!");
+                    return;
+                }
+                else if (board.CheckDraw())
+                {
+                    board.PrintBoard();
+                    Console.WriteLine("It's a draw!");
+                    return;
+                }
+                else
+                {
+                    currentPlayer = (currentPlayer == player1) ? player2 : player1;
+                }
             }
             else
             {
-                currentPlayer = (currentPlayer == player1) ? player2 : player1;
+                Console.WriteLine("Column is full.");
             }
-        }
-        else
-        {
-            Console.WriteLine("Column is full.");
         }
     }
 }
-}
 
-/*    Class designed for keeping track of the turns    */
-class Model
-{
-
-}
-
-
-class program
+class Program
 {
     static void Main(string[] args)
     {
@@ -258,11 +241,10 @@ class program
         Console.WriteLine("Enter Player 2's name (or leave blank for default):");
         player2Name = Console.ReadLine();
 
-
-        //Create the ConnectFour game with the provided or default names
-        //ConnectFour game = new ConnectFour(player1Name, player2Name);
+        // Create the ConnectFour game with the provided or default names
+        ConnectFourGame game = new ConnectFourGame(player1Name, player2Name);
 
         // Start the game
-       // game.PlayGame();
+        game.PlayGame();
     }
 }
