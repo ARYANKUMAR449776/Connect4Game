@@ -9,7 +9,7 @@ abstract class AbstractPlayer
     {
         Symbol = symbol;
     }
-}/*Class to customize player name*/
+}
 
 class Player1 : AbstractPlayer
 {
@@ -60,6 +60,8 @@ class GameBoard
 
     public void PrintBoard()
     {
+        Console.Clear(); // Clear the console before printing the board
+
         // Print top border
         Console.WriteLine(" ---------------------------");
 
@@ -201,7 +203,7 @@ class ConnectFourGame
 
             do
             {
-                Console.WriteLine($"{currentPlayer.Name}, enter column (1-7):");
+                Console.WriteLine($"{currentPlayer.Name}, enter column (1-7)(Then press enter):");
             } while (!int.TryParse(Console.ReadLine(), out column) || column < 1 || column > 7);
 
             column--; // Adjust for 0-based indexing
@@ -241,11 +243,11 @@ class Program
         string player2Name;
 
         // Prompt the user to enter Player 1's name
-        Console.WriteLine("Enter Player 1's name (or leave blank for default):");
+        Console.WriteLine("Enter Player 1's name (or leave blank for default)(Then press enter):");
         player1Name = Console.ReadLine();
 
         // Prompt the user to enter Player 2's name
-        Console.WriteLine("Enter Player 2's name (or leave blank for default):");
+        Console.WriteLine("Enter Player 2's name (or leave blank for default)(Then press enter):");
         player2Name = Console.ReadLine();
 
         // Create the ConnectFour game with the provided or default names
