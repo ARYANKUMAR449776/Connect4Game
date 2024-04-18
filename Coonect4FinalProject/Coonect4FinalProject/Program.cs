@@ -9,7 +9,7 @@ abstract class AbstractPlayer
     {
         Symbol = symbol;
     }
-}
+}/*Class to customize player name*/
 
 class Player1 : AbstractPlayer
 {
@@ -60,16 +60,23 @@ class GameBoard
 
     public void PrintBoard()
     {
+        // Print top border
+        Console.WriteLine(" ---------------------------");
+
+        // Print board content with side borders
         for (int row = 0; row < Rows; row++)
         {
+            Console.Write("|");
             for (int col = 0; col < Cols; col++)
             {
-                Console.Write(board[row, col] + " ");
+                Console.Write($" {board[row, col]} |");
             }
             Console.WriteLine();
+            Console.WriteLine(" ---------------------------");
         }
-        Console.WriteLine("---------------");
-        Console.WriteLine("1 2 3 4 5 6 7");
+
+        // Print numbers at the bottom
+        Console.WriteLine("  1   2   3   4   5   6   7");
     }
 
     public bool DropPiece(int column, char symbol)
