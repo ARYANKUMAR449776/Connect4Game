@@ -54,6 +54,14 @@ class AIcomputerPlayer
     // Once you've implemented the GetBestMove method, integrate the AI into
     // the ConnectFourGame class's PlayGame method. Replace the user's input with
     // calls to the AI
+
+
+
+    public int GetRandomMove()
+    {
+        Random random = new Random();
+        return random.Next(0, 7); // Randomly select a column index between 0 and 6
+    }
 }
 
 
