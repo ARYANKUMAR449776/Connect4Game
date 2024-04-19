@@ -35,6 +35,31 @@ class Player2 : AbstractPlayer
     public override string Name => playerName;
 }
 
+
+class AIcomputerPlayer
+{
+    // This class is responsible for implementing an AI opponent for the Connect Four game.
+    //This method should analyze the current game state and
+    // return the column where the AI wants to drop its piece.)
+
+    // Parameters:
+    // - board: 2D array representing the current state of the game board.
+    // - aiSymbol: The symbol representing the AI's pieces on the board.
+    // - opponentSymbol: The symbol representing the opponent's pieces on the board.
+
+    // Returns:
+    // The column index where the AI wants to drop its piece.
+    //ensure that the AI's moves are valid and within the bounds of the board.
+
+    // Once you've implemented the GetBestMove method, integrate the AI into
+    // the ConnectFourGame class's PlayGame method. Replace the user's input with
+    // calls to the AI
+}
+
+
+
+
+
 class GameBoard
 {
     private char[,] board;
@@ -257,3 +282,4 @@ class Program
         game.PlayGame();
     }
 }
+
