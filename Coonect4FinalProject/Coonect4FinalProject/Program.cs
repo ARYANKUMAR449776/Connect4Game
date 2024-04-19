@@ -91,7 +91,7 @@ class GameBoard
         }
     }
 
-    public void PrintBoard()
+    public void PrintConnect4Board()
     {
         Console.Clear(); // Clear the console before printing the board
 
@@ -127,72 +127,50 @@ class GameBoard
         return false;
     }
 
-    public bool CheckWin()
+    public bool CheckingWinner()
     {
-        // Check horizontally
+        // Check horizontally and vertically
         for (int row = 0; row < Rows; row++)
         {
-            for (int col = 0; col <= Cols - 4; col++)
+            for (int col = 0; col < Cols; col++)
             {
-                if (board[row, col] != ' ' &&
-                    board[row, col] == board[row, col + 1] &&
-                    board[row, col] == board[row, col + 2] &&
-                    board[row, col] == board[row, col + 3])
-                {
-                    return true;
-                }
-            }
-        }
+                char current = board[row, col];
+                if (current == ' ')
+                    continue;
 
-        // Check vertically
-        for (int col = 0; col < Cols; col++)
-        {
-            for (int row = 0; row <= Rows - 4; row++)
-            {
-                if (board[row, col] != ' ' &&
-                    board[row, col] == board[row + 1, col] &&
-                    board[row, col] == board[row + 2, col] &&
-                    board[row, col] == board[row + 3, col])
-                {
+                // Check horizontally
+                if (col + 3 < Cols &&
+                    current == board[row, col + 1] &&
+                    current == board[row, col + 2] &&
+                    current == board[row, col + 3])
                     return true;
-                }
-            }
-        }
 
-        // Check diagonally (bottom-left to top-right)
-        for (int row = 0; row <= Rows - 4; row++)
-        {
-            for (int col = 0; col <= Cols - 4; col++)
-            {
-                if (board[row, col] != ' ' &&
-                    board[row, col] == board[row + 1, col + 1] &&
-                    board[row, col] == board[row + 2, col + 2] &&
-                    board[row, col] == board[row + 3, col + 3])
-                {
+                // Check vertically
+                if (row + 3 < Rows &&
+                    current == board[row + 1, col] &&
+                    current == board[row + 2, col] &&
+                    current == board[row + 3, col])
                     return true;
-                }
-            }
-        }
 
-        // Check diagonally (top-left to bottom-right)
-        for (int row = 3; row < Rows; row++)
-        {
-            for (int col = 0; col <= Cols - 4; col++)
-            {
-                if (board[row, col] != ' ' &&
-                    board[row, col] == board[row - 1, col + 1] &&
-                    board[row, col] == board[row - 2, col + 2] &&
-                    board[row, col] == board[row - 3, col + 3])
-                {
+                // Check diagonally (bottom-left to top-right)
+                if (col + 3 < Cols && row + 3 < Rows &&
+                    current == board[row + 1, col + 1] &&
+                    current == board[row + 2, col + 2] &&
+                    current == board[row + 3, col + 3])
                     return true;
-                }
+
+                // Check diagonally (top-left to bottom-right)
+                if (col + 3 < Cols && row - 3 >= 0 &&
+                    current == board[row - 1, col + 1] &&
+                    current == board[row - 2, col + 2] &&
+                    current == board[row - 3, col + 3])
+                    return true;
             }
         }
 
         return false;
     }
-
-    public bool CheckDraw()
+    public bool CheckingGameDraw()
     {
         for (int col = 0; col < Cols; col++)
         {
@@ -208,7 +186,7 @@ class GameBoard
 
     public bool IsGameOver()
     {
-        return CheckWin() || CheckDraw();
+        return CheckingWinner() || CheckingGameDraw();
     }
 }
 
@@ -231,7 +209,7 @@ class ConnectFourGame
     {
         while (!board.IsGameOver())
         {
-            board.PrintBoard();
+            board.PrintConnect4Board();
             int column;
 
             do
@@ -243,15 +221,15 @@ class ConnectFourGame
 
             if (board.DropPiece(column, currentPlayer.Symbol))
             {
-                if (board.CheckWin())
+                if (board.CheckingWinner())
                 {
-                    board.PrintBoard();
+                    board.PrintConnect4Board();
                     Console.WriteLine($"{currentPlayer.Name} wins!");
                     return;
                 }
-                else if (board.CheckDraw())
+                else if (board.CheckingGameDraw())
                 {
-                    board.PrintBoard();
+                    board.PrintConnect4Board();
                     Console.WriteLine("It's a draw!");
                     return;
                 }
