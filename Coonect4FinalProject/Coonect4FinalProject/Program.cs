@@ -56,7 +56,19 @@ class AIcomputerPlayer
     // calls to the AI
 
 
+    public char Symbol { get; } // Symbol representing the AI's pieces on the board
 
+    // Constructor to initialize the AI's symbol
+    public bool IsPlayingAgainstHuman(string player2Name)
+    {
+        return !string.IsNullOrWhiteSpace(player2Name);
+    }
+    public AIcomputerPlayer()
+    {
+        Symbol = 'I';
+    }
+
+    // This method returns a random move for the AI.
     public int GetRandomMove()
     {
         Random random = new Random();
