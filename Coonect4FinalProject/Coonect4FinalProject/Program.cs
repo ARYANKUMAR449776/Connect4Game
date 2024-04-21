@@ -215,6 +215,7 @@ class ConnectFourGame
     private AbstractPlayer player1;
     private AbstractPlayer player2;
     private AbstractPlayer currentPlayer;
+    private int currentRound;
 
     public ConnectFourGame(string player1Name = null, string player2Name = null)
     {
@@ -222,6 +223,8 @@ class ConnectFourGame
         player1 = new Player1('X', player1Name);
         player2 = new Player2('O', player2Name);
         currentPlayer = player1;
+        currentRound = 1; // Start with round 1//theres a bug here fix it
+
     }
 
     public void PlayGame()
@@ -229,6 +232,7 @@ class ConnectFourGame
         while (!board.IsGameOver())
         {
             board.PrintConnect4Board();
+            Console.WriteLine($"Round {currentRound}");
             int column;
 
             do
@@ -255,6 +259,7 @@ class ConnectFourGame
                 else
                 {
                     currentPlayer = (currentPlayer == player1) ? player2 : player1;
+                    currentRound++;
                 }
             }
             else
