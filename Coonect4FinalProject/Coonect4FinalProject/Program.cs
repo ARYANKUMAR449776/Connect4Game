@@ -36,46 +36,53 @@ class Player2 : AbstractPlayer
 }
 
 
-class AIcomputerPlayer
-{
-    // This class is responsible for implementing an AI opponent for the Connect Four game.
-    //This method should analyze the current game state and
-    // return the column where the AI wants to drop its piece.)
-
-    // Parameters:
-    // - board: 2D array representing the current state of the game board.
-    // - aiSymbol: The symbol representing the AI's pieces on the board.
-    // - opponentSymbol: The symbol representing the opponent's pieces on the board.
-
-    // Returns:
-    // The column index where the AI wants to drop its piece.
-    //ensure that the AI's moves are valid and within the bounds of the board.
-
-    // Once you've implemented the GetBestMove method, integrate the AI into
-    // the ConnectFourGame class's PlayGame method. Replace the user's input with
-    // calls to the AI
 
 
-    public char Symbol { get; } // Symbol representing the AI's pieces on the board
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // Constructor to initialize the AI's symbol
-    public bool IsPlayingAgainstHuman(string player2Name)
-    {
-        return !string.IsNullOrWhiteSpace(player2Name);
-    }
-    public AIcomputerPlayer()
-    {
-        Symbol = 'I';
-    }
 
-    // This method returns a random move for the AI.
-    public int GetRandomMove()
-    {
-        Random random = new Random();
-        return random.Next(0, 7); // Randomly select a column index between 0 and 6
-    }
-}
+//class AIcomputerPlayer
+//{
+//    // This class is responsible for implementing an AI opponent for the Connect Four game.
+//    //This method should analyze the current game state and
+//    // return the column where the AI wants to drop its piece.)
 
+//    // Parameters:
+//    // - board: 2D array representing the current state of the game board.
+//    // - aiSymbol: The symbol representing the AI's pieces on the board.
+//    // - opponentSymbol: The symbol representing the opponent's pieces on the board.
+
+//    // Returns:
+//    // The column index where the AI wants to drop its piece.
+//    //ensure that the AI's moves are valid and within the bounds of the board.
+
+//    // Once you've implemented the GetBestMove method, integrate the AI into
+//    // the ConnectFourGame class's PlayGame method. Replace the user's input with
+//    // calls to the AI
+
+
+//    public char Symbol { get; } // Symbol representing the AI's pieces on the board
+
+//    // Constructor to initialize the AI's symbol
+//    public bool IsPlayingAgainstHuman(string player2Name)
+//    {
+//        return !string.IsNullOrWhiteSpace(player2Name);
+//    }
+//    public AIcomputerPlayer()
+//    {
+//        Symbol = 'I';
+//    }
+
+//    // This method returns a random move for the AI.
+//    public int GetRandomMove()
+//    {
+//        Random random = new Random();
+//        return random.Next(0, 7); // Randomly select a column index between 0 and 6
+//    }
+//}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -264,20 +271,32 @@ class Program
     {
         string player1Name;
         string player2Name;
+        int numberOfGames;
 
-        // Prompt the user to enter Player 1's name
+        // Prompting the user to enter Player 1's name
         Console.WriteLine("Enter Player 1's name (or leave blank for default)(Then press enter):");
         player1Name = Console.ReadLine();
 
-        // Prompt the user to enter Player 2's name
+        // Prompting the user to enter Player 2's name
         Console.WriteLine("Enter Player 2's name (or leave blank for default)(Then press enter):");
         player2Name = Console.ReadLine();
 
-        // Create the ConnectFour game with the provided or default names
-        ConnectFourGame game = new ConnectFourGame(player1Name, player2Name);
+        // Prompting the user to enter the number of games
+        Console.WriteLine("Enter the number of games to play:");
+        while (!int.TryParse(Console.ReadLine(), out numberOfGames) || numberOfGames <= 0)
+        {
+            Console.WriteLine("Invalid input. Please enter a valid number of games:");
+        }
 
-        // Start the game
-        game.PlayGame();
+        for (int i = 0; i < numberOfGames; i++)
+        {
+            // Creating the ConnectFour game with the provided or default names
+            ConnectFourGame game = new ConnectFourGame(player1Name, player2Name);
+
+            // Starting the game
+            game.PlayGame();
+        }
+
+        Console.WriteLine("Thank you for playing!");
     }
 }
-
