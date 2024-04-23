@@ -276,10 +276,7 @@ class Program
             else
             {
                 // Asking for player names if not playing against the computer
-                Console.WriteLine("Enter Player 1's name (or leave blank for default)(Then press enter):");
-                player1Name = Console.ReadLine();
-                Console.WriteLine("Enter Player 2's name (or leave blank for default)(Then press enter):");
-                player2Name = Console.ReadLine();
+                GetPlayerNames(out player1Name, out player2Name);
             }
 
             do
@@ -298,41 +295,34 @@ class Program
                 if (!playAgain)
                     break; // Exit the loop if the user doesn't want to play again
 
-                // Asking the user if they want to play with the same person or a different one
-                Console.WriteLine("Do you want to play with the same person? (yes/no)");
+                // Asking the user if they want to play with the computer
+                Console.WriteLine("Do you want to play with the computer? (yes/no)");
                 response = Console.ReadLine();
-                if (response.ToLower() == "no")
+                if (response.ToLower() == "yes")
                 {
-                    // Resetting player names to allow new inputs
-                    player1Name = null;
-                    player2Name = null;
+                    // If playing with the computer, skip asking for player names
+                    playAgainstAI = true;
+                }
+                else
+                {
+                    // If not playing with the computer, ask for player names
+                    GetPlayerNames(out player1Name, out player2Name);
                     playAgainstAI = false;
                 }
 
             } while (playAgain);
 
-            if (!playAgain)
-                break; // Exit the outer loop if the user doesn't want to play again
-
-            // Asking the user whether to play again against the computer or with different players
-            Console.WriteLine("Do you want to play against the computer again? (yes/no)");
-            response = Console.ReadLine();
-            if (response.ToLower() == "yes")
-            {
-                playAgainstAI = true;
-            }
-            else
-            {
-                Console.WriteLine("Enter Player 1's name (or leave blank for default)(Then press enter):");
-                player1Name = Console.ReadLine();
-                Console.WriteLine("Enter Player 2's name (or leave blank for default)(Then press enter):");
-                player2Name = Console.ReadLine();
-                playAgainstAI = false;
-            }
-
         } while (true);
 
         Console.WriteLine("Thank you for playing!");
+    }
+
+    static void GetPlayerNames(out string player1Name, out string player2Name)
+    {
+        Console.WriteLine("Enter Player 1's name (or leave blank for default)(Then press enter):");
+        player1Name = Console.ReadLine();
+        Console.WriteLine("Enter Player 2's name (or leave blank for default)(Then press enter):");
+        player2Name = Console.ReadLine();
     }
 }
 
