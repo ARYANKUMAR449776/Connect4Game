@@ -213,7 +213,9 @@ class ConnectFourGame
                 {
                     Console.WriteLine($"{currentPlayer.Name}, enter column (1-7)(Then press enter):");
                 } while (!int.TryParse(Console.ReadLine(), out column) || column < 1 || column > 7);
-                column--; // Adjust for 0-based indexing
+                column--;
+                
+              
             }
 
             if (board.DropPiece(column, currentPlayer.Symbol))
@@ -283,21 +285,24 @@ class Program
                 response = Console.ReadLine();
                 playAgain = (response.ToLower() == "yes");
 
-                if (playAgain)
+                if (!playAgain)
+                    break; // Exit the loop if the user doesn't want to play again
+
+                // Asking the user if they want to play with the same person or a different one
+                Console.WriteLine("Do you want to play with the same person? (yes/no)");
+                response = Console.ReadLine();
+                if (response.ToLower() == "no")
                 {
-                    // Asking the user if they want to play with the same person or a different one
-                    Console.WriteLine("Do you want to play with the same person? (yes/no)");
-                    response = Console.ReadLine();
-                    if (response.ToLower() == "no")
-                    {
-                        // Resetting player names to allow new inputs
-                        player1Name = null;
-                        player2Name = null;
-                        playAgainstAI = false;
-                    }
+                    // Resetting player names to allow new inputs
+                    player1Name = null;
+                    player2Name = null;
+                    playAgainstAI = false;
                 }
 
             } while (playAgain);
+
+            if (!playAgain)
+                break; // Exit the outer loop if the user doesn't want to play again
 
             // Asking the user whether to play again against the computer or with different players
             Console.WriteLine("Do you want to play against the computer again? (yes/no)");
@@ -315,7 +320,7 @@ class Program
                 playAgainstAI = false;
             }
 
-        } while (playAgain);
+        } while (true);
 
         Console.WriteLine("Thank you for playing!");
     }
