@@ -7,7 +7,7 @@ using System;
    Connect 4 Final Project 
 */
 
-
+/*Abstract Class used to handle players or Ai*/
 abstract class AbstractPlayer
 {
     public char Symbol { get; }
@@ -58,6 +58,8 @@ class RandomAIPlayer : AbstractPlayer
     }
 }
 
+
+/*Gameboard Class for printing the GameBoard and initialize it and checking empty spaces or matching symbols for the win , draw logic*/
 class GameBoard
 {
     private char[,] board;
@@ -180,6 +182,7 @@ class GameBoard
     }
 }
 
+/*Coonect 4 game class for the play logic*/
 class ConnectFourGame
 {
     private GameBoard board;
@@ -222,15 +225,15 @@ class ConnectFourGame
                     Console.WriteLine($"{currentPlayer.Name}, enter column (1-7)(Then press enter):");
                     string input = Console.ReadLine();
 
-                    // Check if the input is a valid number between 1 and 7
+                    // Checking if the input is a valid number between 1 and 7
                     if (!int.TryParse(input, out column) || column < 1 || column > 7)
                     {
                         Console.WriteLine("Please select a correct column (1-7).");
                     }
                     else
                     {
-                        column--; // Adjust the column index to match array indexing
-                        break; // Break out of the loop once a valid column is selected
+                        column--; 
+                        break; 
                     }
                 }
             }
@@ -267,11 +270,12 @@ class Program
 {
     static void Main(string[] args)
     {
+        bool playAgain = false;
         string player1Name = null;
         string player2Name = null;
         bool playAgainstAI = false;
 
-        while (true)
+        do
         {
             // Asking the user whether to play against the computer initially
             string response;
@@ -293,45 +297,52 @@ class Program
                 GetPlayerNames(out player1Name, out player2Name);
             }
 
-            // Creating the ConnectFour game with the provided or default names and AI choice
-            ConnectFourGame game = new ConnectFourGame(player1Name, player2Name, playAgainstAI);
-
-            // Starting the game
-            game.PlayGame();
-
-            // Asking the user if they want to play again
             do
             {
-                Console.WriteLine("Do you want to play again? (yes/no)");
-                response = Console.ReadLine().ToLower();
-                if (response != "yes" && response != "no")
+                // Creating the ConnectFour game with the provided or default names and AI choice
+                ConnectFourGame game = new ConnectFourGame(player1Name, player2Name, playAgainstAI);
+
+                // Starting the game
+                game.PlayGame();
+
+                // Asking the user if they want to play again
+                do
                 {
-                    Console.WriteLine("Please enter 'yes' or 'no'.");
-                }
-            } while (response != "yes" && response != "no");
+                    Console.WriteLine("Do you want to play again? (yes/no)");
+                    response = Console.ReadLine().ToLower();
+                    if (response != "yes" && response != "no")
+                    {
+                        Console.WriteLine("Please enter 'yes' or 'no'.");
+                    }
+                } while (response != "yes" && response != "no");
 
-            if (response == "no")
-            {
-                break; // Exit the loop if the user doesn't want to play again
-            }
+                playAgain = (response == "yes");
 
-            // If the user wants to play again, ask if they want to play with the same person
-            do
-            {
-                Console.WriteLine("Do you want to play with the same person? (yes/no)");
-                response = Console.ReadLine().ToLower();
-                if (response != "yes" && response != "no")
+                if (playAgain)
                 {
-                    Console.WriteLine("Please enter 'yes' or 'no'.");
-                }
-            } while (response != "yes" && response != "no");
+                    // Asking the user if they want to play with the same person or a different one
+                    do
+                    {
+                        Console.WriteLine("Do you want to play with the same person? (yes/no)");
+                        response = Console.ReadLine().ToLower();
+                        if (response != "yes" && response != "no")
+                        {
+                            Console.WriteLine("Please enter 'yes' or 'no'.");
+                        }
+                    } while (response != "yes" && response != "no");
 
-            if (response == "no")
-            {
-                // If not playing with the same person, ask for player names
-                GetPlayerNames(out player1Name, out player2Name);
-            }
-        }
+                    if (response == "no")
+                    {
+                        // If not playing with the same person, ask for player names
+                        GetPlayerNames(out player1Name, out player2Name);
+                        playAgainstAI = false;
+                    }
+                }
+
+            } while (playAgain);
+
+            // Exiting the loop if the user chooses not to play again
+        } while (false); // Change true to false to exit the loop after the first game
 
         Console.WriteLine("Thank you for playing!");
     }
