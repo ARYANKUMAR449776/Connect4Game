@@ -209,13 +209,22 @@ class ConnectFourGame
             }
             else
             {
-                do
+                while (true)
                 {
                     Console.WriteLine($"{currentPlayer.Name}, enter column (1-7)(Then press enter):");
-                } while (!int.TryParse(Console.ReadLine(), out column) || column < 1 || column > 7);
-                column--;
-                
-              
+                    string input = Console.ReadLine();
+
+                    // Check if the input is a valid number between 1 and 7
+                    if (!int.TryParse(input, out column) || column < 1 || column > 7)
+                    {
+                        Console.WriteLine("Please select a correct column (1-7).");
+                    }
+                    else
+                    {
+                        column--; // Adjust the column index to match array indexing
+                        break; // Break out of the loop once a valid column is selected
+                    }
+                }
             }
 
             if (board.DropPiece(column, currentPlayer.Symbol))
@@ -243,6 +252,7 @@ class ConnectFourGame
             }
         }
     }
+
 }
 
 class Program
