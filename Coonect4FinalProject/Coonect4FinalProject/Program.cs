@@ -35,6 +35,21 @@ class Player2 : AbstractPlayer
     public override string Name => playerName;
 }
 
+class RandomAIPlayer : AbstractPlayer
+{
+    public RandomAIPlayer(char symbol) : base(symbol)
+    {
+    }
+
+    public override string Name => "Computer (AI)";
+
+    public int GetRandomMove()
+    {
+        Random random = new Random();
+        return random.Next(0, 7); // Randomly select a column index between 0 and 6
+    }
+}
+
 class GameBoard
 {
     private char[,] board;
@@ -164,11 +179,18 @@ class ConnectFourGame
     private AbstractPlayer player2;
     private AbstractPlayer currentPlayer;
 
-    public ConnectFourGame(string player1Name = null, string player2Name = null)
+    public ConnectFourGame(string player1Name = null, string player2Name = null, bool playAgainstAI = false)
     {
         board = new GameBoard();
         player1 = new Player1('X', player1Name);
-        player2 = new Player2('O', player2Name);
+        if (playAgainstAI)
+        {
+            player2 = new RandomAIPlayer('O');
+        }
+        else
+        {
+            player2 = new Player2('O', player2Name);
+        }
         currentPlayer = player1;
     }
 
@@ -179,12 +201,20 @@ class ConnectFourGame
             board.PrintConnect4Board();
             int column;
 
-            do
+            if (currentPlayer is RandomAIPlayer)
             {
-                Console.WriteLine($"{currentPlayer.Name}, enter column (1-7)(Then press enter):");
-            } while (!int.TryParse(Console.ReadLine(), out column) || column < 1 || column > 7);
-
-            column--; // Adjust for 0-based indexing
+                RandomAIPlayer aiPlayer = currentPlayer as RandomAIPlayer;
+                column = aiPlayer.GetRandomMove();
+                Console.WriteLine($"{currentPlayer.Name} chose column {column + 1}");
+            }
+            else
+            {
+                do
+                {
+                    Console.WriteLine($"{currentPlayer.Name}, enter column (1-7)(Then press enter):");
+                } while (!int.TryParse(Console.ReadLine(), out column) || column < 1 || column > 7);
+                column--; // Adjust for 0-based indexing
+            }
 
             if (board.DropPiece(column, currentPlayer.Symbol))
             {
@@ -219,17 +249,33 @@ class Program
     {
         string player1Name;
         string player2Name;
+        bool playAgainstAI = false;
+
+        // Prompting the user to choose whether to play against the computer
+        Console.WriteLine("Do you want to play against the computer? (yes/no)");
+        string response = Console.ReadLine();
+        if (response.ToLower() == "yes")
+        {
+            playAgainstAI = true;
+        }
 
         // Prompting the user to enter Player 1's name
         Console.WriteLine("Enter Player 1's name (or leave blank for default)(Then press enter):");
         player1Name = Console.ReadLine();
 
-        // Prompting the user to enter Player 2's name
-        Console.WriteLine("Enter Player 2's name (or leave blank for default)(Then press enter):");
-        player2Name = Console.ReadLine();
+        // Prompting the user to enter Player 2's name or choosing AI
+        if (!playAgainstAI)
+        {
+            Console.WriteLine("Enter Player 2's name (or leave blank for default)(Then press enter):");
+            player2Name = Console.ReadLine();
+        }
+        else
+        {
+            player2Name = null;
+        }
 
-        // Creating the ConnectFour game with the provided or default names
-        ConnectFourGame game = new ConnectFourGame(player1Name, player2Name);
+        // Creating the ConnectFour game with the provided or default names and AI choice
+        ConnectFourGame game = new ConnectFourGame(player1Name, player2Name, playAgainstAI);
 
         // Starting the game
         game.PlayGame();
