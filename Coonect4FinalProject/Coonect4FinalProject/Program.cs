@@ -1,5 +1,13 @@
 using System;
 
+
+/* 
+   Aryan Kumar 
+   449776
+   Connect 4 Final Project 
+*/
+
+
 abstract class AbstractPlayer
 {
     public char Symbol { get; }
@@ -259,60 +267,71 @@ class Program
 {
     static void Main(string[] args)
     {
-        bool playAgain = false;
         string player1Name = null;
         string player2Name = null;
         bool playAgainstAI = false;
 
-        do
+        while (true)
         {
             // Asking the user whether to play against the computer initially
-            Console.WriteLine("Do you want to play against the computer? (yes/no)");
-            string response = Console.ReadLine();
-            if (response.ToLower() == "yes")
+            string response;
+            do
             {
-                playAgainstAI = true;
-            }
-            else
+                Console.WriteLine("Do you want to play against the computer? (yes/no)");
+                response = Console.ReadLine().ToLower();
+                if (response != "yes" && response != "no")
+                {
+                    Console.WriteLine("Please enter 'yes' or 'no'.");
+                }
+            } while (response != "yes" && response != "no");
+
+            playAgainstAI = (response == "yes");
+
+            if (!playAgainstAI)
             {
                 // Asking for player names if not playing against the computer
                 GetPlayerNames(out player1Name, out player2Name);
             }
 
+            // Creating the ConnectFour game with the provided or default names and AI choice
+            ConnectFourGame game = new ConnectFourGame(player1Name, player2Name, playAgainstAI);
+
+            // Starting the game
+            game.PlayGame();
+
+            // Asking the user if they want to play again
             do
             {
-                // Creating the ConnectFour game with the provided or default names and AI choice
-                ConnectFourGame game = new ConnectFourGame(player1Name, player2Name, playAgainstAI);
-
-                // Starting the game
-                game.PlayGame();
-
-                // Asking the user if they want to play again
                 Console.WriteLine("Do you want to play again? (yes/no)");
-                response = Console.ReadLine();
-                playAgain = (response.ToLower() == "yes");
-
-                if (!playAgain)
-                    break; // Exit the loop if the user doesn't want to play again
-
-                // Asking the user if they want to play with the computer
-                Console.WriteLine("Do you want to play with the computer? (yes/no)");
-                response = Console.ReadLine();
-                if (response.ToLower() == "yes")
+                response = Console.ReadLine().ToLower();
+                if (response != "yes" && response != "no")
                 {
-                    // If playing with the computer, skip asking for player names
-                    playAgainstAI = true;
+                    Console.WriteLine("Please enter 'yes' or 'no'.");
                 }
-                else
+            } while (response != "yes" && response != "no");
+
+            if (response == "no")
+            {
+                break; // Exit the loop if the user doesn't want to play again
+            }
+
+            // If the user wants to play again, ask if they want to play with the same person
+            do
+            {
+                Console.WriteLine("Do you want to play with the same person? (yes/no)");
+                response = Console.ReadLine().ToLower();
+                if (response != "yes" && response != "no")
                 {
-                    // If not playing with the computer, ask for player names
-                    GetPlayerNames(out player1Name, out player2Name);
-                    playAgainstAI = false;
+                    Console.WriteLine("Please enter 'yes' or 'no'.");
                 }
+            } while (response != "yes" && response != "no");
 
-            } while (playAgain);
-
-        } while (true);
+            if (response == "no")
+            {
+                // If not playing with the same person, ask for player names
+                GetPlayerNames(out player1Name, out player2Name);
+            }
+        }
 
         Console.WriteLine("Thank you for playing!");
     }
@@ -325,4 +344,3 @@ class Program
         player2Name = Console.ReadLine();
     }
 }
-
