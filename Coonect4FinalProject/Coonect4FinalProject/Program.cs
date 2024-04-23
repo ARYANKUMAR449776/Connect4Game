@@ -247,39 +247,77 @@ class Program
 {
     static void Main(string[] args)
     {
-        string player1Name;
-        string player2Name;
+        bool playAgain = false;
+        string player1Name = null;
+        string player2Name = null;
         bool playAgainstAI = false;
 
-        // Prompting the user to choose whether to play against the computer
-        Console.WriteLine("Do you want to play against the computer? (yes/no)");
-        string response = Console.ReadLine();
-        if (response.ToLower() == "yes")
+        do
         {
-            playAgainstAI = true;
-        }
+            // Asking the user whether to play against the computer initially
+            Console.WriteLine("Do you want to play against the computer? (yes/no)");
+            string response = Console.ReadLine();
+            if (response.ToLower() == "yes")
+            {
+                playAgainstAI = true;
+            }
+            else
+            {
+                // Asking for player names if not playing against the computer
+                Console.WriteLine("Enter Player 1's name (or leave blank for default)(Then press enter):");
+                player1Name = Console.ReadLine();
+                Console.WriteLine("Enter Player 2's name (or leave blank for default)(Then press enter):");
+                player2Name = Console.ReadLine();
+            }
 
-        // Prompting the user to enter Player 1's name
-        Console.WriteLine("Enter Player 1's name (or leave blank for default)(Then press enter):");
-        player1Name = Console.ReadLine();
+            do
+            {
+                // Creating the ConnectFour game with the provided or default names and AI choice
+                ConnectFourGame game = new ConnectFourGame(player1Name, player2Name, playAgainstAI);
 
-        // Prompting the user to enter Player 2's name or choosing AI
-        if (!playAgainstAI)
-        {
-            Console.WriteLine("Enter Player 2's name (or leave blank for default)(Then press enter):");
-            player2Name = Console.ReadLine();
-        }
-        else
-        {
-            player2Name = null;
-        }
+                // Starting the game
+                game.PlayGame();
 
-        // Creating the ConnectFour game with the provided or default names and AI choice
-        ConnectFourGame game = new ConnectFourGame(player1Name, player2Name, playAgainstAI);
+                // Asking the user if they want to play again
+                Console.WriteLine("Do you want to play again? (yes/no)");
+                response = Console.ReadLine();
+                playAgain = (response.ToLower() == "yes");
 
-        // Starting the game
-        game.PlayGame();
+                if (playAgain)
+                {
+                    // Asking the user if they want to play with the same person or a different one
+                    Console.WriteLine("Do you want to play with the same person? (yes/no)");
+                    response = Console.ReadLine();
+                    if (response.ToLower() == "no")
+                    {
+                        // Resetting player names to allow new inputs
+                        player1Name = null;
+                        player2Name = null;
+                        playAgainstAI = false;
+                    }
+                }
+
+            } while (playAgain);
+
+            // Asking the user whether to play again against the computer or with different players
+            Console.WriteLine("Do you want to play against the computer again? (yes/no)");
+            response = Console.ReadLine();
+            if (response.ToLower() == "yes")
+            {
+                playAgainstAI = true;
+            }
+            else
+            {
+                Console.WriteLine("Enter Player 1's name (or leave blank for default)(Then press enter):");
+                player1Name = Console.ReadLine();
+                Console.WriteLine("Enter Player 2's name (or leave blank for default)(Then press enter):");
+                player2Name = Console.ReadLine();
+                playAgainstAI = false;
+            }
+
+        } while (playAgain);
 
         Console.WriteLine("Thank you for playing!");
     }
 }
+
